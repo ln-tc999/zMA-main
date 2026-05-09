@@ -124,7 +124,7 @@ export function ShareCard({
                   <div className="flex items-center gap-2">
                     <img
                       src="/Assets/Images/Logo-Brand/logo-transparent.png"
-                      alt="iEx AI"
+                      alt="zMAAI"
                       width={28}
                       height={28}
                       style={{ width: 28, height: 28, objectFit: "contain" }}
@@ -137,7 +137,7 @@ export function ShareCard({
                         letterSpacing: "-0.01em",
                       }}
                     >
-                      iEx AI
+                      zMAAI
                     </span>
                   </div>
                   <span
@@ -354,11 +354,11 @@ export function ShareCard({
                         color: "#6b6b75",
                       }}
                     >
-                      Earn with iEx AI
+                      Earn with zMAAI
                     </span>
                     <img
                       src="/Assets/Images/Logo-Brand/logo-transparent.png"
-                      alt="iEx AI"
+                      alt="zMAAI"
                       width={14}
                       height={14}
                       style={{ width: 14, height: 14, objectFit: "contain" }}
