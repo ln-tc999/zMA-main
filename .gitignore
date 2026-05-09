@@ -45,3 +45,6 @@ next-env.d.ts
 foundry/out
 foundry/cache
 foundry/lib
+
+# zama fhe contracts
+contracts/
