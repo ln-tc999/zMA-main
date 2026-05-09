@@ -1,59 +1,16 @@
 import { create } from "zustand";
-import { fetchVaultsViaProxy } from "@/lib/nox-vault";
-import type { NoxVault } from "@/lib/nox-vault";
 import type { VaultStrategy } from "@/types";
-import { mockChains } from "@/data";
-
-function mapNoxVault(vault: NoxVault): VaultStrategy {
-  const tvlUsd = parseFloat(vault.tvl?.usd ?? "0");
-  const apyPercent = vault.apy?.total ?? 0;
-  const chain = mockChains.find((c) => c.id === vault.chainId);
-  return {
-    id: `${vault.chainId}:${vault.address}`,
-    protocol: vault.protocol,
-    protocolKey: vault.protocol.toLowerCase().replace(/\s+/g, "-"),
-    protocolLogoUri: vault.protocolLogo,
-    vaultName: vault.name,
-    vaultAddress: vault.address,
-    tokenSymbol: vault.underlyingToken?.symbol ?? "-",
-    tokenAddress: vault.underlyingToken?.address ?? "",
-    tokenDecimals: vault.underlyingToken?.decimals ?? 18,
-    chainId: vault.chainId,
-    chainShortName: chain?.shortName ?? `Chain ${vault.chainId}`,
-    apy: apyPercent,
-    apy30d: vault.apy30d ?? null,
-    tvlUsd,
-    risk: inferRisk(apyPercent, tvlUsd),
-    isTransactional: true,
-    isRedeemable: true,
-    kyc: false,
-    timeLock: vault.timeLock ?? 0,
-    tags: [],
-  };
-}
-
-function inferRisk(
-  apyPercent: number,
-  tvlUsd: number,
-): "low" | "medium" | "high" {
-  if (apyPercent >= 40) return "high";
-  if (apyPercent >= 12) return "medium";
-  if (tvlUsd >= 5_000_000) return "low";
-  return "medium";
-}
+import type { ZamaVault } from "@/lib/zama-sdk";
 
 export const COMPARE_MAX_SLOTS = 4;
-const SEARCH_LIMIT = 30;
-
-type SearchStatus = "idle" | "loading" | "ready" | "error";
 
 type CompareState = {
   selectedVaults: VaultStrategy[];
   pickerOpen: boolean;
-  searchChainId: number | null;
+  searchChainId: number;
   searchQuery: string;
   searchResults: VaultStrategy[];
-  searchStatus: SearchStatus;
+  searchStatus: "idle" | "loading" | "ready" | "error";
   openPicker: () => void;
   closePicker: () => void;
   setSearchChain: (chainId: number | null) => void;
@@ -64,12 +21,38 @@ type CompareState = {
   clearAll: () => void;
 };
 
+function mapZamaVault(v: ZamaVault): VaultStrategy {
+  return {
+    id: v.address,
+    protocol: "Zama FHE",
+    protocolKey: "zama-fhe",
+    vaultName: v.name,
+    vaultAddress: v.address,
+    tokenSymbol: v.symbol.replace("-Vault", ""),
+    tokenAddress: v.asset,
+    tokenDecimals: v.decimals,
+    chainId: 11155111,
+    chainShortName: "Sepolia",
+    apy: v.apy,
+    apy30d: null,
+    tvlUsd: Number.parseFloat(v.tvl),
+    risk: "medium" as const,
+    isTransactional: true,
+    isRedeemable: true,
+    kyc: false,
+    timeLock: 0,
+    tags: ["FHE", "Confidential"],
+    protocolLogoUri: undefined,
+    protocolUrl: undefined,
+  };
+}
+
 let searchController: AbortController | null = null;
 
 export const useCompareStore = create<CompareState>((set, get) => ({
   selectedVaults: [],
   pickerOpen: false,
-  searchChainId: 421614,
+  searchChainId: 11155111,
   searchQuery: "",
   searchResults: [],
   searchStatus: "idle",
@@ -81,7 +64,7 @@ export const useCompareStore = create<CompareState>((set, get) => ({
   },
   closePicker: () => set({ pickerOpen: false }),
   setSearchChain: (searchChainId) => {
-    set({ searchChainId, searchResults: [] });
+    set({ searchChainId: searchChainId ?? 11155111, searchResults: [] });
     get().searchVaults();
   },
   setSearchQuery: (searchQuery) => set({ searchQuery }),
@@ -95,23 +78,25 @@ export const useCompareStore = create<CompareState>((set, get) => ({
     set({ searchStatus: "loading" });
 
     try {
-      const params: Parameters<typeof fetchVaultsViaProxy>[0] = {
-        sortBy: "apy",
-        limit: SEARCH_LIMIT,
-        minTvlUsd: searchChainId === 421614 ? 0 : 50_000,
-      };
-      if (searchChainId) params.chainId = searchChainId;
-      const trimmed = searchQuery.trim();
-      if (trimmed) params.tokenAddress = trimmed;
-
-      const response = await fetchVaultsViaProxy(params, controller.signal);
+      const url = `/api/zama/vaults?chainId=${searchChainId}`;
+      const response = await fetch(url, { signal: controller.signal });
       if (controller.signal.aborted) return;
 
-      const vaults = response.data.map(mapNoxVault);
-      set({ searchResults: vaults, searchStatus: "ready" });
-    } catch (error) {
-      if ((error as Error).name === "AbortError") return;
-      set({ searchStatus: "error", searchResults: [] });
+      const data = await response.json();
+      const vaults: VaultStrategy[] = (data.data ?? []).map(mapZamaVault);
+      const filtered = searchQuery.trim()
+        ? vaults.filter(
+            (v) =>
+              v.vaultName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              v.tokenSymbol.toLowerCase().includes(searchQuery.toLowerCase()),
+          )
+        : vaults;
+
+      set({ searchResults: filtered, searchStatus: "ready" });
+    } catch (err) {
+      if ((err as DOMException).name !== "AbortError") {
+        set({ searchStatus: "error", searchResults: [] });
+      }
     }
   },
   addVault: (vault) => {
