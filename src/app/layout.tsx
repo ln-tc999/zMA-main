@@ -10,9 +10,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "iEx AI — Find the best yield route",
+  title: "zMAAI — Find the best yield route",
   description:
-    "iEx AI discovers the best confidential vault opportunities using Nox Protocol and deposits in one click.",
+    "zMAAI discovers the best confidential vault opportunities using Nox Protocol and deposits in one click.",
 };
 
 export default function RootLayout({
