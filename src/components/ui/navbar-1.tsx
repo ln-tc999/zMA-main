@@ -35,7 +35,7 @@ const Navbar1 = () => {
             >
               <Image
                 src="/Assets/Images/Logo-Brand/logo-transparent.png"
-                alt="iEx AI"
+                alt="zMAAI"
                 fill
                 priority
                 sizes="36px"
@@ -43,7 +43,7 @@ const Navbar1 = () => {
               />
             </motion.div>
             <span className="hidden text-base font-semibold tracking-tight text-main sm:inline">
-              iEx AI
+              zMAAI
             </span>
           </Link>
         </div>
