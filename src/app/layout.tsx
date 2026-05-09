@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "zMAAI — Find the best yield route",
   description:
-    "zMAAI discovers the best confidential vault opportunities using Nox Protocol and deposits in one click.",
+    "zMAAI discovers the best confidential vault opportunities using Zama FHE and deposits in one click.",
 };
 
 export default function RootLayout({
