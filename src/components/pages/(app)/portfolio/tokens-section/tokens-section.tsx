@@ -70,7 +70,7 @@ export function TokensSection({ holdings = [], status }: TokensSectionProps) {
             </p>
             <p className="max-w-sm text-xs text-muted">
               We couldn&apos;t find any balances across the supported networks.
-              Bridge in funds to start earning on iEx AI.
+              Bridge in funds to start earning on zMAAI.
             </p>
           </motion.div>
         ) : (
