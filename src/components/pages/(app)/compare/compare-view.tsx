@@ -84,7 +84,7 @@ export function CompareView() {
           <span className="inline-flex items-center gap-2 self-start rounded-full bg-brand-soft px-3 py-1 text-[11px] font-semibold text-brand">
             <Image
               src={IEX_AI_LOGO}
-              alt="iEx AI"
+              alt="zMAAI"
               width={14}
               height={14}
               className="h-3.5 w-3.5 object-contain"
@@ -172,15 +172,15 @@ function buildSupplyContext(
 
   const token: Token = meta
     ? {
-        symbol: meta.symbol,
-        name: meta.name ?? meta.symbol,
-        usdPrice: Number.parseFloat(meta.priceUSD ?? "0") || 0,
-      }
+      symbol: meta.symbol,
+      name: meta.name ?? meta.symbol,
+      usdPrice: Number.parseFloat(meta.priceUSD ?? "0") || 0,
+    }
     : {
-        symbol: vault.tokenSymbol,
-        name: vault.tokenSymbol,
-        usdPrice: 0,
-      };
+      symbol: vault.tokenSymbol,
+      name: vault.tokenSymbol,
+      usdPrice: 0,
+    };
 
   return { token, chain };
 }
@@ -513,7 +513,7 @@ function EmptyState({ onAdd }: { onAdd: () => void }) {
       <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-soft">
         <Image
           src={IEX_AI_LOGO}
-          alt="iEx AI"
+          alt="zMAAI"
           width={36}
           height={36}
           className="h-9 w-9 object-contain"
