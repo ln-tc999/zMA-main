@@ -119,9 +119,9 @@ export function ActiveFlow({
       : balanceNumber < 0.0001 && balanceNumber > 0
         ? "< 0.0001"
         : balanceNumber.toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 4,
-          });
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 4,
+        });
 
   let amountWei: bigint | null = null;
   if (hasAmount) {
@@ -624,12 +624,12 @@ export function ActiveFlow({
       <div className="flex items-center gap-2 rounded-xl bg-surface-raised/60 px-3 py-2 text-[11px] text-muted">
         <Image
           src="/Assets/Images/Logo-Brand/logo-transparent.png"
-          alt="iEx AI"
+          alt="zMAAI"
           width={16}
           height={16}
           className="h-4 w-4 object-contain"
         />
-        Non-custodial. iEx AI never holds your funds — your wallet signs every
+        Non-custodial. zMAAI never holds your funds — your wallet signs every
         step.
       </div>
 
