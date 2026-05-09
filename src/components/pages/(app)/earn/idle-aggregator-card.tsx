@@ -9,12 +9,12 @@ export function IdleAggregatorCard() {
         <span className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-faint">
           <Image
             src="/Assets/Images/Logo-Brand/logo-transparent.png"
-            alt="iEx AI"
+            alt="zMAAI"
             width={18}
             height={18}
             className="h-4 w-4 object-contain"
           />
-          iEx AI Aggregator · Arbitrum-first
+          zMAAI Aggregator · Arbitrum-first
         </span>
         <h2 className="max-w-[22ch] text-xl font-semibold leading-tight tracking-tight text-main sm:text-2xl">
           Best yield on Arbitrum, aggregated live.
