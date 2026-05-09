@@ -75,6 +75,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function SharePage({ params }: Props) {
-  const { address } = await params;
+  await params;
   redirect(`/portfolio`);
 }
