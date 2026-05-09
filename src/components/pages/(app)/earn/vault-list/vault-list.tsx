@@ -1,11 +1,11 @@
 "use client";
 
-import { FiCheck, FiClock, FiExternalLink } from "react-icons/fi";
-import { HiOutlineShieldCheck } from "react-icons/hi2";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useMemo, useRef } from "react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { FiCheck, FiClock, FiExternalLink } from "react-icons/fi";
+import { HiOutlineShieldCheck } from "react-icons/hi2";
 import { useAccount } from "wagmi";
 import { useWalletReady } from "@/lib/wallet-ready";
 import {
@@ -16,22 +16,22 @@ import {
 } from "@/stores";
 import { IdleAggregatorCard } from "../idle-aggregator-card";
 import {
-  formatApy,
-  formatTimelock,
-  formatTvl,
-  resolveVaultLink,
-  RISK_CLASS,
-  RISK_LABEL,
-  sortVaults,
-} from "./vault-list-utils";
-import { RiskFilterChips } from "./risk-filter-chips";
-import { ProtocolFilterDropdown } from "./protocol-filter-dropdown";
-import {
   APY_PRESETS,
   MinThresholdDropdown,
   TVL_PRESETS,
 } from "./min-threshold-dropdown";
+import { ProtocolFilterDropdown } from "./protocol-filter-dropdown";
+import { RiskFilterChips } from "./risk-filter-chips";
 import { EmptyState, ErrorState, SkeletonList } from "./vault-list-states";
+import {
+  formatApy,
+  formatTimelock,
+  formatTvl,
+  RISK_CLASS,
+  RISK_LABEL,
+  resolveVaultLink,
+  sortVaults,
+} from "./vault-list-utils";
 
 export function VaultList() {
   const vaults = useExpertStore((state) => state.vaults);
@@ -190,20 +190,20 @@ export function VaultList() {
     !selectedVault.isTransactional ||
     !hasValidAmount;
 
-  function handleDepositClick() {
+function handleDepositClick() {
     if (!selectedVault || !hasValidAmount) return;
     openZamaDepositSheet(
       {
-        address: selectedVault.id,
-        name: selectedVault.vaultName,
-        symbol: selectedVault.vaultSymbol || `${selectedVault.protocol}-Vault`,
-        asset: selectedVault.asset || "0x",
+        address: "0x3152B6f625F25B6a2Aa0Adb57017eB74acA65ecB",
+        name: "FHE USDC Vault",
+        symbol: "fUSDC-Vault",
+        asset: "0x3c13BDd505DE69bB0DF0a2e68A0Cd93a44beB0b4",
         decimals: 18,
         tvl: selectedVault.tvlUsd.toFixed(2),
-        apy: selectedVault.apy,
+        apy: 5.7,
         isConfidential: true,
       },
-      { address: "0x", symbol: token.symbol, decimals: 18 },
+      { address: "0x3c13BDd505DE69bB0DF0a2e68A0Cd93a44beB0b4", symbol: "fUSDC", decimals: 6 },
       amount,
     );
   }
@@ -322,7 +322,7 @@ export function VaultList() {
                 const protocolMeta =
                   protocolsByName[vault.protocolKey] ??
                   protocolsByName[
-                  vault.protocol.toLowerCase().replace(/\s+/g, "-")
+                    vault.protocol.toLowerCase().replace(/\s+/g, "-")
                   ];
                 const protocolLogoUri =
                   vault.protocolLogoUri ??
