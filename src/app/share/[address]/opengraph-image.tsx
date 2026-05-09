@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "iEx AI Earn Positions";
+export const alt = "zMAAI Earn Positions";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -64,7 +64,7 @@ export default async function OGImage({
           fontWeight: 700,
         }}
       >
-        iEx AI
+        zMAAI
       </div>,
       { ...size },
     );
@@ -128,7 +128,7 @@ export default async function OGImage({
               letterSpacing: "-0.02em",
             }}
           >
-            iEx AI
+            zMAAI
           </span>
         </div>
         <span
@@ -284,7 +284,7 @@ export default async function OGImage({
             color: "#6b6b75",
           }}
         >
-          Earn with iEx AI
+          Earn with zMAAI
         </span>
         <span
           style={{
