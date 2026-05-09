@@ -1,12 +1,12 @@
-# iExec Vibe Coding Challenge - iEx AI
+# iExec Vibe Coding Challenge - zMAAI
 
-**iEx AI** = Confidential Yield Vault Aggregator. BUILT & DEPLOYED.
+**zMAAI** = Confidential Yield Vault Aggregator. BUILT & DEPLOYED.
 
 ## Apa Aplikasi Ini?
 
 Yield farming lacks privacy. Every position, balance, and strategy is visible on-chain — exposed to MEV bots and copy-traders.
 
-iEx AI menyelesaikan ini dengan:
+zMAAI menyelesaikan ini dengan:
 1. User deposit USDC/RLC → di-wrap ke cUSDC/cRLC (ERC-7984 confidential token)
 2. cUSDC/cRLC masuk ke ERC-4626 yield vault
 3. Balance tersembunyi dari public chain
