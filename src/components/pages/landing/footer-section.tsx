@@ -74,13 +74,13 @@ export function FooterSection() {
             <div className="flex items-center gap-3">
               <Image
                 src="/Assets/Images/Logo-Brand/logo-transparent.png"
-                alt="iEx AI"
+                alt="zMAAI"
                 width={48}
                 height={48}
                 className="size-12 select-none rounded-full"
               />
               <span className="text-sm font-bold uppercase tracking-widest text-main">
-                iEx AI
+                zMAAI
               </span>
             </div>
 
@@ -139,7 +139,7 @@ export function FooterSection() {
       <div className="pointer-events-none mt-10 flex select-none items-center justify-center gap-4 overflow-hidden">
         <Image
           src="/Assets/Images/Logo-Brand/logo-transparent.png"
-          alt="iEx AI"
+          alt="zMAAI"
           width={200}
           height={200}
           className="select-none rounded-full opacity-5"
@@ -155,7 +155,7 @@ export function FooterSection() {
             opacity: 0.05,
           }}
         >
-          iEX AI
+          zMAAI
         </p>
       </div>
 
@@ -165,7 +165,7 @@ export function FooterSection() {
         style={{ borderColor: "var(--color-line)" }}
       >
         <p className="text-center text-xs text-faint">
-          2026 iEx AI. All rights reserved.
+          2026 zMAAI. All rights reserved.
         </p>
       </div>
     </footer>
