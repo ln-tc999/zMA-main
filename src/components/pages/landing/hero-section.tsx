@@ -239,9 +239,9 @@ export function HeroSection() {
               <br />
               Farming.
               <br />
-              <span className="text-muted">Powered by</span> Nox
+              <span className="text-muted">Powered by</span> Zama
               <br />
-              Protocol.
+              FHE.
             </motion.h1>
 
             <motion.div
@@ -252,10 +252,9 @@ export function HeroSection() {
             >
               <FiPlus className="mt-0.5 size-4 shrink-0 text-faint" />
               <p className="max-w-sm text-sm leading-relaxed text-muted">
-                Confidential yield farming powered by iExec Nox & TEE compute.
-                Secure your assets with ERC-7984 tokens and find the best routes
-                with ChainGPT-assisted AI routing — keeping your balances hidden
-                on-chain.
+                Confidential yield farming powered by Zama FHE. Your deposit
+                amounts stay encrypted on-chain via Fully Homomorphic Encryption
+                while vault TVL remains publicly verifiable.
               </p>
             </motion.div>
 
