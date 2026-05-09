@@ -12,6 +12,7 @@ import {
   useExpertStore,
   useMetaStore,
   useNoxDepositStore,
+  useZamaDepositStore,
 } from "@/stores";
 import { IdleAggregatorCard } from "../idle-aggregator-card";
 import {
@@ -57,7 +58,7 @@ export function VaultList() {
   const setTvlMinFilter = useExpertStore((state) => state.setTvlMinFilter);
   const selectVault = useExpertStore((state) => state.selectVault);
   const fetchVaults = useExpertStore((state) => state.fetchVaults);
-  const openNoxDepositSheet = useNoxDepositStore((state) => state.openSheet);
+  const openZamaDepositSheet = useZamaDepositStore((state) => state.openSheet);
   const chainsById = useMetaStore((state) => state.chainsById);
   const protocolsByName = useMetaStore((state) => state.protocolsByName);
   const loadMeta = useMetaStore((state) => state.loadMeta);
@@ -191,12 +192,20 @@ export function VaultList() {
 
   function handleDepositClick() {
     if (!selectedVault || !hasValidAmount) return;
-    openNoxDepositSheet({
-      vault: selectedVault,
-      token,
-      chain,
+    openZamaDepositSheet(
+      {
+        address: selectedVault.id,
+        name: selectedVault.vaultName,
+        symbol: selectedVault.vaultSymbol || `${selectedVault.protocol}-Vault`,
+        asset: selectedVault.asset || "0x",
+        decimals: 18,
+        tvl: selectedVault.tvlUsd.toFixed(2),
+        apy: selectedVault.apy,
+        isConfidential: true,
+      },
+      { address: "0x", symbol: token.symbol, decimals: 18 },
       amount,
-    });
+    );
   }
 
   if (!hasValidAmount) {
@@ -210,7 +219,7 @@ export function VaultList() {
           <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-brand-soft">
             <Image
               src="/Assets/Images/Logo-Brand/logo-transparent.png"
-              alt="iEx AI"
+              alt="zMAAI"
               width={32}
               height={32}
               className="h-8 w-8 object-contain rounded-full"
@@ -313,7 +322,7 @@ export function VaultList() {
                 const protocolMeta =
                   protocolsByName[vault.protocolKey] ??
                   protocolsByName[
-                    vault.protocol.toLowerCase().replace(/\s+/g, "-")
+                  vault.protocol.toLowerCase().replace(/\s+/g, "-")
                   ];
                 const protocolLogoUri =
                   vault.protocolLogoUri ??
@@ -513,7 +522,7 @@ export function VaultList() {
       <div className="mt-3 flex items-center justify-center gap-2 pb-1">
         <span className="text-[11px] font-medium text-faint">Powered by</span>
         <span className="text-[11px] font-semibold tracking-tight text-muted">
-          LI.FI
+          Zama FHE
         </span>
       </div>
     </section>
