@@ -39,7 +39,7 @@ function formatUsd(value: number): string {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { address } = await params;
   if (!ADDRESS_PATTERN.test(address)) {
-    return { title: "iEx AI" };
+    return { title: "zMAAI" };
   }
 
   const positions = await fetchPositions(address);
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     0,
   );
   const short = `${address.slice(0, 6)}...${address.slice(-4)}`;
-  const title = `${short} is earning ${formatUsd(totalUsd)} on iEx AI`;
+  const title = `${short} is earning ${formatUsd(totalUsd)} on zMAAI`;
   const description = `${positions.length} active vault${positions.length === 1 ? "" : "s"} across DeFi. Best yield, one click.`;
 
   const baseUrl =
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       type: "website",
-      siteName: "iEx AI",
+      siteName: "zMAAI",
       url: `${baseUrl}/share/${address}`,
     },
     twitter: {
