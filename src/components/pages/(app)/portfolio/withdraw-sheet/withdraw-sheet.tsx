@@ -1,55 +1,36 @@
 "use client";
 
-import { FiX, FiArrowDown, FiCheck, FiExternalLink, FiLoader } from "react-icons/fi";
+import {
+  FiX,
+  FiArrowDown,
+  FiCheck,
+  FiExternalLink,
+  FiLoader,
+} from "react-icons/fi";
 import { AnimatePresence, motion } from "motion/react";
 import { formatUnits } from "viem";
-import {
-  useAccount,
-  useChainId,
-  useConfig,
-  useSwitchChain,
-} from "wagmi";
+import { useAccount, useChainId, useConfig, useSwitchChain } from "wagmi";
 import { useWalletReady } from "@/lib/wallet-ready";
-import { useWithdrawStore, useNoxWithdrawStore, useMetaStore } from "@/stores";
+import { useWithdrawStore, useMetaStore } from "@/stores";
 import { ConnectPrompt, LoadingState } from "./withdraw-sheet-states";
 import type { LifiPortfolioPosition } from "@/lib/lifi-portfolio";
-import type { NoxPortfolio } from "@/lib/nox-types";
-
-function isNoxProtocol(pos: LifiPortfolioPosition | NoxPortfolio | null | undefined): boolean {
-  if (!pos) return false;
-  const protocol = "protocolName" in pos ? (pos as unknown as { protocolName?: string }).protocolName?.toLowerCase() : "";
-  return protocol?.includes("nox") || false;
-}
 
 export function WithdrawSheet() {
   const lifiOpen = useWithdrawStore((state) => state.open);
   const lifiCloseSheet = useWithdrawStore((state) => state.closeSheet);
-  const lifiPosition = useWithdrawStore((state) => state.position) as unknown as LifiPortfolioPosition | NoxPortfolio | null | undefined;
-
-  const noxOpen = useNoxWithdrawStore((state) => state.open);
-  const noxCloseSheet = useNoxWithdrawStore((state) => state.closeSheet);
-  const noxPosition = useNoxWithdrawStore((state) => state.position);
-
+  const lifiPosition = useWithdrawStore((state) => state.position);
   const ready = useWalletReady();
-
-  const { address, isConnected } = useAccount();
-
-  const isNox = isNoxProtocol(lifiPosition);
-  const noxIsNox = noxPosition && isNoxProtocol(noxPosition);
-
-  const currentOpen = isNox || noxIsNox ? noxOpen : lifiOpen;
-  const currentClose = isNox || noxIsNox ? noxCloseSheet : lifiCloseSheet;
 
   return (
     <AnimatePresence>
-      {currentOpen ? (
+      {lifiOpen ? (
         <motion.div
           key="backdrop"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          onClick={currentClose}
+          onClick={lifiCloseSheet}
           className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 backdrop-blur-md sm:items-center sm:p-6"
         >
           <motion.div
@@ -73,48 +54,25 @@ function WithdrawBody() {
   const lifiCloseSheet = useWithdrawStore((state) => state.closeSheet);
   const lifiPosition = useWithdrawStore((state) => state.position);
 
-  const noxCloseSheet = useNoxWithdrawStore((state) => state.closeSheet);
-  const noxPosition = useNoxWithdrawStore((state) => state.position);
-
-  const { address, isConnected } = useAccount();
-
-  const isNox = isNoxProtocol(lifiPosition);
-  const noxIsNox = noxPosition && isNoxProtocol(noxPosition);
+  const { isConnected, address } = useAccount();
 
   if (!isConnected || !address) {
     return <ConnectPrompt />;
-  }
-
-  if (isNox || noxIsNox) {
-    return (
-      <div className="flex flex-col">
-        <SheetHeader onClose={noxCloseSheet} isNox />
-        <div className="px-5 pb-5 pt-4">
-          <NoxWithdrawFlow />
-        </div>
-      </div>
-    );
   }
 
   if (!lifiPosition) return null;
 
   return (
     <div className="flex flex-col">
-      <SheetHeader onClose={lifiCloseSheet} isNox={false} />
+      <SheetHeader onClose={lifiCloseSheet} />
       <div className="px-5 pb-5 pt-4">
-        <p className="text-sm text-muted">LI.FI withdraw flow</p>
+        <LifiWithdrawFlow />
       </div>
     </div>
   );
 }
 
-function SheetHeader({
-  onClose,
-  isNox,
-}: {
-  onClose: () => void;
-  isNox: boolean;
-}) {
+function SheetHeader({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex items-center justify-between border-b border-main px-5 py-4">
       <div>
@@ -122,7 +80,7 @@ function SheetHeader({
           Withdraw
         </div>
         <h3 className="text-base font-semibold text-main">
-          {isNox ? "Confidential withdrawal" : "Pull funds out of your vault"}
+          Pull funds out of your vault
         </h3>
       </div>
       <button
@@ -137,15 +95,15 @@ function SheetHeader({
   );
 }
 
-function NoxWithdrawFlow() {
-  const noxPosition = useNoxWithdrawStore((state) => state.position)!;
-  const percentage = useNoxWithdrawStore((state) => state.percentage);
-  const step = useNoxWithdrawStore((state) => state.step);
-  const error = useNoxWithdrawStore((state) => state.error);
-  const txHash = useNoxWithdrawStore((state) => state.txHash);
-  const setPercentage = useNoxWithdrawStore((state) => state.setPercentage);
-  const executeWithdraw = useNoxWithdrawStore((state) => state.executeWithdraw);
-  const setStep = useNoxWithdrawStore((state) => state.setStep);
+function LifiWithdrawFlow() {
+  const position = useWithdrawStore((state) => state.position);
+  const percentage = useWithdrawStore((state) => state.percentage);
+  const step = useWithdrawStore((state) => state.step);
+  const error = useWithdrawStore((state) => state.error);
+  const txHash = useWithdrawStore((state) => state.txHash);
+  const setPercentage = useWithdrawStore((state) => state.setPercentage);
+  const executeWithdraw = useWithdrawStore((state) => state.executeWithdraw);
+  const setStep = useWithdrawStore((state) => state.setStep);
 
   const config = useConfig();
   const chainId = useChainId();
@@ -153,14 +111,16 @@ function NoxWithdrawFlow() {
   const { address } = useAccount();
   const chainsById = useMetaStore((state) => state.chainsById);
 
-  if (!noxPosition) {
+  if (!position) {
     return <LoadingState />;
   }
 
-  const balance = noxPosition.balance;
-  const decimals = noxPosition.token.decimals;
-  const symbol = noxPosition.token.symbol;
-  const vaultName = noxPosition.vaultName || noxPosition.protocol || "Vault";
+  const balance = position.balanceNative;
+  const decimals = position.asset.decimals;
+  const symbol = position.asset.symbol;
+  const chainName =
+    chainsById[position.chainId]?.name ?? `Chain ${position.chainId}`;
+  const protocolName = position.protocolName ?? "Vault";
 
   const formattedBalance = (() => {
     try {
@@ -185,8 +145,14 @@ function NoxWithdrawFlow() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-muted">Vault</span>
-            <span className="text-xs font-semibold text-main">{vaultName}</span>
+            <span className="text-xs font-medium text-muted">Protocol</span>
+            <span className="text-xs font-semibold text-main">
+              {protocolName}
+            </span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-muted">Chain</span>
+            <span className="text-xs font-semibold text-main">{chainName}</span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-muted">Balance</span>
@@ -204,7 +170,9 @@ function NoxWithdrawFlow() {
               onChange={(e) => setPercentage(Number.parseInt(e.target.value))}
               className="h-1 flex-1 cursor-pointer accent-brand"
             />
-            <span className="text-xs font-semibold text-main">{percentage}%</span>
+            <span className="text-xs font-semibold text-main">
+              {percentage}%
+            </span>
           </div>
           <div className="flex items-center justify-between rounded-lg bg-surface-raised px-3 py-2">
             <span className="text-xs text-muted">Amount to withdraw</span>
@@ -218,8 +186,8 @@ function NoxWithdrawFlow() {
           type="button"
           onClick={async () => {
             if (!address) return;
-            if (chainId !== noxPosition.chainId) {
-              await switchChainAsync({ chainId: noxPosition.chainId });
+            if (chainId !== position.chainId) {
+              await switchChainAsync({ chainId: position.chainId });
             }
             await executeWithdraw(config, address);
           }}
@@ -229,30 +197,18 @@ function NoxWithdrawFlow() {
           <FiArrowDown className="h-4 w-4" />
           Withdraw
         </button>
+      </div>
+    );
+  }
 
-        <p className="text-center text-[10px] text-faint">
-          Non-custodial. Unwraps confidential tokens back to underlying.
+  if (step === "executing") {
+    return (
+      <div className="flex flex-col items-center gap-3 py-8 text-center">
+        <FiLoader className="h-6 w-6 animate-spin text-brand" />
+        <p className="text-sm font-semibold text-main">
+          Processing withdrawal...
         </p>
-      </div>
-    );
-  }
-
-  if (step === "redeeming") {
-    return (
-      <div className="flex flex-col items-center gap-3 py-8 text-center">
-        <FiLoader className="h-6 w-6 animate-spin text-brand" />
-        <p className="text-sm font-semibold text-main">Redeeming your vault shares...</p>
         <p className="text-xs text-muted">Please confirm in your wallet</p>
-      </div>
-    );
-  }
-
-  if (step === "unwrapping") {
-    return (
-      <div className="flex flex-col items-center gap-3 py-8 text-center">
-        <FiLoader className="h-6 w-6 animate-spin text-brand" />
-        <p className="text-sm font-semibold text-main">Unwrapping confidential tokens...</p>
-        <p className="text-xs text-muted">Converting cToken back to underlying</p>
       </div>
     );
   }
@@ -263,7 +219,9 @@ function NoxWithdrawFlow() {
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[rgba(16,185,129,0.1)]">
           <FiCheck className="h-6 w-6 text-[#10B981]" />
         </div>
-        <p className="text-sm font-semibold text-main">Withdrawal successful!</p>
+        <p className="text-sm font-semibold text-main">
+          Withdrawal successful!
+        </p>
         <p className="text-xs text-muted">
           {withdrawAmount} {symbol} has been sent to your wallet
         </p>
