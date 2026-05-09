@@ -1,14 +1,14 @@
 "use client";
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { AnimatePresence, AnimatePresence, motion, motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useMemo } from "react";
-import { FiAlertTriangle, FiAlertTriangle, FiCheck, FiCheck, FiLoader, FiLoader, FiX, FiX } from "react-icons/fi";
-import { HiLockClosed, HiLockClosed } from "react-icons/hi2";
+import { FiAlertTriangle, FiCheck, FiLoader, FiX } from "react-icons/fi";
+import { HiLockClosed } from "react-icons/hi2";
 import { parseUnits } from "viem";
-import { useAccount, useAccount, useChainId, useChainId, useConfig, useConfig, useSwitchChain, useSwitchChain } from "wagmi";
-import { useWalletReady, useWalletReady } from "@/lib/wallet-ready";
-import { useZamaDepositStore, useZamaDepositStore } from "@/stores";
+import { useAccount, useChainId, useConfig, useSwitchChain } from "wagmi";
+import { useWalletReady } from "@/lib/wallet-ready";
+import { useZamaDepositStore } from "@/stores";
 
 export function ZamaDepositSheet() {
   const open = useZamaDepositStore((state) => state.open);
