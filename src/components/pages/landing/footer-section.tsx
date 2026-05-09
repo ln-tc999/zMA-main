@@ -13,11 +13,11 @@ const navLinks = [
 const docLinks = [
   {
     label: "Docs",
-    href: "https://docs.iex.ec/nox-protocol/getting-started/welcome",
+    href: "https://docs.zama.ai/fhevm",
   },
   {
-    label: "Nox Protocol",
-    href: "https://docs.iex.ec/nox-protocol/getting-started/welcome",
+    label: "Zama FHE",
+    href: "https://zama.ai",
   },
 ];
 
@@ -37,8 +37,7 @@ export function FooterSection() {
             <div className="flex items-start gap-2">
               <p className="max-w-xs text-sm leading-relaxed text-muted">
                 Join the growing community of DeFi users who keep their
-                positions private with iExec Nox & ChainGPT-powered
-                confidential vaults on Arbitrum.
+                positions private with Zama FHE encryption on Ethereum.
               </p>
             </div>
             <div>
@@ -53,10 +52,10 @@ export function FooterSection() {
 
           <h3 className="text-right text-3xl leading-snug tracking-tight text-main md:text-5xl lg:text-6xl">
             <span className="text-muted">Confidential</span> Yield{" "}
-            <span className="text-muted">native to</span> Arbitrum
+            <span className="text-muted">native to</span> Ethereum
             <Image
-              src="/Assets/Images/Logo-Coin/arb-logo.svg"
-              alt="Arbitrum"
+              src="/Assets/Images/Logo-Coin/eth-logo.svg"
+              alt="Ethereum"
               width={100}
               height={100}
               className="pointer-events-none -mb-2 ml-1 inline-block select-none align-middle"
