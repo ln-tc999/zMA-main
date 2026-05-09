@@ -12,9 +12,7 @@ const ZAMA_GATEWAY = {
 } as const;
 
 export function getZamaGateway(chainId: number): string {
-  return (
-    ZAMA_GATEWAY[chainId as keyof typeof ZAMA_GATEWAY] || ZAMA_GATEWAY[11155111]
-  );
+  return ZAMA_GATEWAY[chainId as keyof typeof ZAMA_GATEWAY] || ZAMA_GATEWAY[11155111];
 }
 
 let fhevmInstance: FhevmInstance | null = null;
@@ -34,10 +32,7 @@ export async function getFhevmInstance(
   return instance;
 }
 
-export function decryptUint256(
-  instance: FhevmInstance,
-  encrypted: string,
-): bigint {
+export function decryptUint256(instance: FhevmInstance, encrypted: string): bigint {
   try {
     const decrypted = instance.decrypt("uint256", encrypted);
     return BigInt(decrypted);
@@ -80,56 +75,51 @@ export interface ZamaToken {
 }
 
 export const ZAMA_CONTRACTS = {
-  FHEUSDC: "0x0000000000000000000000000000000000000000",
-  FHEVAULT: "0x0000000000000000000000000000000000000000",
+  FHEUSDC: "0x3c13BDd505DE69bB0DF0a2e68A0Cd93a44beB0b4",
+  FHEVAULT: "0x3152B6f625F25B6a2Aa0Adb57017eB74acA65ecB",
 } as const;
-
-export function setZamaContracts(usdc: string, vault: string) {
-  ZAMA_CONTRACTS.FHEUSDC = usdc;
-  ZAMA_CONTRACTS.FHEVAULT = vault;
-}
 
 export const FHE_ABI = [
   {
     name: "deposit",
     type: "function",
     inputs: [
-      { name: "assets", type: "uint256" },
+      { name: "assets", type: "bytes32" },
       { name: "receiver", type: "address" },
     ],
-    outputs: [{ name: "", type: "uint256" }],
+    outputs: [{ name: "", type: "bytes32" }],
     stateMutability: "nonpayable",
   },
   {
     name: "withdraw",
     type: "function",
     inputs: [
-      { name: "shares", type: "uint256" },
+      { name: "shares", type: "bytes32" },
       { name: "receiver", type: "address" },
       { name: "owner", type: "address" },
     ],
-    outputs: [{ name: "", type: "uint256" }],
+    outputs: [{ name: "", type: "bytes32" }],
     stateMutability: "nonpayable",
   },
   {
-    name: "asset",
+    name: "underlying",
     type: "function",
     inputs: [],
     outputs: [{ name: "", type: "address" }],
     stateMutability: "view",
   },
   {
-    name: "totalAssets",
+    name: "getTotalAssets",
     type: "function",
     inputs: [],
-    outputs: [{ name: "", type: "uint256" }],
+    outputs: [{ name: "", type: "bytes32" }],
     stateMutability: "view",
   },
   {
-    name: "balanceOf",
+    name: "getShares",
     type: "function",
     inputs: [{ name: "account", type: "address" }],
-    outputs: [{ name: "", type: "uint256" }],
+    outputs: [{ name: "", type: "bytes32" }],
     stateMutability: "view",
   },
 ] as const;
