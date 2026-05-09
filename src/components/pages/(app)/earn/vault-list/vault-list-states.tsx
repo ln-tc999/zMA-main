@@ -109,7 +109,7 @@ export function EmptyState() {
       <p className="text-sm font-semibold text-main">No vaults available</p>
       <p className="max-w-xs text-xs text-muted">
         Try another token or chain — we couldn&apos;t find routes for this
-        combination on Nox Protocol.
+        combination on Zama FHE vaults.
       </p>
     </motion.div>
   );
