@@ -119,9 +119,9 @@ export function ActiveFlow({
       : balanceNumber < 0.0001 && balanceNumber > 0
         ? "< 0.0001"
         : balanceNumber.toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 4,
-        });
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 4,
+          });
 
   let amountWei: bigint | null = null;
   if (hasAmount) {
