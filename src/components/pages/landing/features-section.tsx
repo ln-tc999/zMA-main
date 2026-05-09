@@ -283,7 +283,7 @@ export function FeaturesSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          Why earn with iEx AI
+          Why earn with zMAAI
         </motion.h2>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
