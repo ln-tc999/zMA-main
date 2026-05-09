@@ -1,4 +1,8 @@
-import { readContract } from "@wagmi/core";
+import {
+  readContract,
+  waitForTransactionReceipt,
+  sendTransaction,
+} from "@wagmi/core";
 import { encodeFunctionData, erc20Abi } from "viem";
 import type { Config } from "wagmi";
 import { create } from "zustand";
@@ -10,8 +14,7 @@ export type WithdrawStep =
   | "idle"
   | "quoting"
   | "ready"
-  | "approving"
-  | "withdrawing"
+  | "executing"
   | "success"
   | "error";
 
@@ -90,6 +93,7 @@ type WithdrawState = {
   closeSheet: () => void;
   setPercentage: (percentage: number) => void;
   fetchQuote: (fromAddress: string, config: Config) => Promise<void>;
+  executeWithdraw: (config: Config, fromAddress: string) => Promise<void>;
   setStep: (step: WithdrawStep) => void;
   setError: (error: string | null) => void;
   setTxHash: (txHash: string | null) => void;
@@ -290,4 +294,46 @@ export const useWithdrawStore = create<WithdrawState>((set, get) => ({
   setStep: (step) => set({ step }),
   setError: (error) => set({ error }),
   setTxHash: (txHash) => set({ txHash }),
+  executeWithdraw: async (config, _fromAddress) => {
+    const { quote, position } = get();
+    if (!quote || !position) {
+      set({ step: "error", error: "No quote available" });
+      return;
+    }
+
+    const { transactionRequest } = quote;
+    if (!transactionRequest) {
+      set({ step: "error", error: "Invalid quote" });
+      return;
+    }
+
+    try {
+      set({ step: "executing", error: null });
+
+      const hash = await sendTransaction(config, {
+        to: transactionRequest.to as `0x${string}`,
+        data: transactionRequest.data as `0x${string}`,
+        value: transactionRequest.value
+          ? BigInt(transactionRequest.value)
+          : undefined,
+        chainId: quote.action.fromChainId,
+      });
+
+      const receipt = await waitForTransactionReceipt(config, { hash });
+      if (receipt.status === "success") {
+        set({ step: "success", txHash: hash, error: null });
+      } else {
+        set({ step: "error", error: "Transaction failed on-chain" });
+      }
+    } catch (err) {
+      if ((err as Error).name === "UserRejectedRequestError") {
+        set({ step: "idle" });
+        return;
+      }
+      set({
+        step: "error",
+        error: (err as Error).message || "Withdrawal failed",
+      });
+    }
+  },
 }));
