@@ -21,7 +21,7 @@ const [primary, ...rest] = allChains.sort((a, b) => {
 
 export function createWagmiConfig(projectId: string) {
   return getDefaultConfig({
-    appName: "iEx AI",
+    appName: "zMAAI",
     appDescription: "Find the best yield route across DeFi",
     projectId,
     chains: [primary, ...rest],
