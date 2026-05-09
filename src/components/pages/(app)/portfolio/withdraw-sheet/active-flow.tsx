@@ -9,11 +9,7 @@ export function ConnectionGate() {
     return <ConnectPrompt />;
   }
 
-  return (
-    <div className="text-sm text-muted">
-      Using LI.FI withdraw flow
-    </div>
-  );
+  return <div className="text-sm text-muted">Using LI.FI withdraw flow</div>;
 }
 
 export function WithdrawActiveFlow() {
