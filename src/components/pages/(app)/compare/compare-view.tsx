@@ -172,15 +172,15 @@ function buildSupplyContext(
 
   const token: Token = meta
     ? {
-      symbol: meta.symbol,
-      name: meta.name ?? meta.symbol,
-      usdPrice: Number.parseFloat(meta.priceUSD ?? "0") || 0,
-    }
+        symbol: meta.symbol,
+        name: meta.name ?? meta.symbol,
+        usdPrice: Number.parseFloat(meta.priceUSD ?? "0") || 0,
+      }
     : {
-      symbol: vault.tokenSymbol,
-      name: vault.tokenSymbol,
-      usdPrice: 0,
-    };
+        symbol: vault.tokenSymbol,
+        name: vault.tokenSymbol,
+        usdPrice: 0,
+      };
 
   return { token, chain };
 }
