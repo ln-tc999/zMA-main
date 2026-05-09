@@ -8,7 +8,7 @@ import Link from "next/link";
 import type { LifiChainMeta } from "@/lib/lifi-meta";
 import type { LifiPortfolioPosition } from "@/lib/lifi-portfolio";
 import { resolvePositionUrl, resolveProtocol } from "@/lib/protocol-registry";
-import { useWithdrawStore, useNoxWithdrawStore } from "@/stores";
+import { useWithdrawStore } from "@/stores";
 import {
   formatBalance,
   formatUsd,
@@ -29,7 +29,6 @@ export function PositionsSection({
   chainsById,
 }: PositionsSectionProps) {
   const openWithdrawSheet = useWithdrawStore((state) => state.openSheet);
-  const openNoxWithdrawSheet = useNoxWithdrawStore((state) => state.openSheet);
   const isLoading = status === "loading" || status === "idle";
   const isEmpty = status === "ready" && positions.length === 0;
 
@@ -41,7 +40,7 @@ export function PositionsSection({
             Earn positions
           </h2>
           <p className="text-xs text-muted">
-            Active vaults discovered via Nox Protocol
+            Active earn positions tracked by Zama FHE
           </p>
         </div>
       </header>
@@ -187,14 +186,7 @@ export function PositionsSection({
                         </div>
                         <button
                           type="button"
-                          onClick={() => {
-                            const isConfidential = position.protocolName?.toLowerCase().includes("nox");
-                            if (isConfidential) {
-                              openNoxWithdrawSheet(position as unknown as import("@/lib/nox-types").NoxPortfolio);
-                              return;
-                            }
-                            openWithdrawSheet(position);
-                          }}
+                          onClick={() => openWithdrawSheet(position)}
                           className="flex h-7 items-center gap-1 rounded-full bg-brand px-3 text-[10px] font-semibold text-white cursor-pointer transition-colors hover:bg-brand-hover"
                         >
                           Withdraw
