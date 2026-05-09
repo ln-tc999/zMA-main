@@ -86,7 +86,9 @@ function ChainGPTVisual() {
       <div className="flex flex-col items-center gap-4">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
-          animate={inView ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
+          animate={
+            inView ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }
+          }
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="relative"
         >
@@ -219,36 +221,31 @@ function OneClickVisual() {
 const features = [
   {
     emoji: "🔒",
-    title: "Nox Protocol & TEE",
+    title: "Zama FHE Encryption",
     description:
-      "Powered by iExec Nox and Trusted Execution Environments (TEE). Your individual balances and strategies stay cryptographically hidden while aggregate TVL remains public.",
+      "Powered by Zama's Fully Homomorphic Encryption (fhEVM). Your deposit amounts stay encrypted on-chain while vault TVL remains publicly verifiable.",
     visual: ConfidentialVaultVisual,
     tags: [
       {
         icon: "/Assets/Images/Logo-Coin/usdt-logo.svg",
-        rate: "5–12%",
-        name: "cUSDC",
-      },
-      {
-        icon: "/Assets/Images/Logo-Coin/rlc-logo.svg",
-        rate: "8–15%",
-        name: "cRLC",
+        rate: "5–8%",
+        name: "fUSDC",
       },
     ],
   },
   {
     emoji: "🤖",
-    title: "ChainGPT AI Routing",
+    title: "AI Vault Routing",
     description:
-      "Get real-time vault recommendations and risk analysis powered by ChainGPT. Our AI agent finds the most efficient yield routes across Arbitrum while preserving your privacy.",
+      "Get real-time vault recommendations and APY comparisons powered by AI. Find the best yield routes across Ethereum while keeping your balances encrypted.",
     visual: ChainGPTVisual,
     logos: true,
   },
   {
     emoji: "🛡️",
-    title: "Confidential Tokens",
+    title: "On-Chain Privacy",
     description:
-      "ERC-7984 confidential tokens (cUSDC, cRLC) wrap your public assets into private ones. Enjoy the security of confidential transfers without sacrificing DeFi composability.",
+      "All deposit amounts are encrypted via FHE before reaching the blockchain. No trusted third party — the cryptography itself guarantees privacy.",
     visual: OneClickVisual,
   },
 ];
