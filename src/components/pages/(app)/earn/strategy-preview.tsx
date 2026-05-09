@@ -23,7 +23,7 @@ export function StrategyPreview() {
         <span className="flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-brand-soft">
           <Image
             src="/Assets/Images/Logo-Brand/logo-transparent.png"
-            alt="iEx AI"
+            alt="zMAAI"
             width={20}
             height={20}
             className="h-5 w-5 object-contain rounded-full"
