@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "iEx AI | 404",
+  title: "zMAAI | 404",
 };
 
 export default function NotFound() {
@@ -11,7 +11,7 @@ export default function NotFound() {
     <div className="flex min-h-dvh flex-col items-center justify-center gap-8 px-4 text-center">
       <Image
         src="/Assets/Images/Logo-Brand/logo-transparent.png"
-        alt="iEx AI"
+        alt="zMAAI"
         width={160}
         height={160}
         className="h-40 w-40 object-contain opacity-70"
