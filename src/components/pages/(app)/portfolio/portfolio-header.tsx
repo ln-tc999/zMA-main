@@ -28,7 +28,7 @@ export function PortfolioHeader({
       await navigator.clipboard.writeText(address);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1600);
-    } catch { }
+    } catch {}
   }
 
   return (
