@@ -8,12 +8,7 @@ import { FiCheck, FiClock, FiExternalLink } from "react-icons/fi";
 import { HiOutlineShieldCheck } from "react-icons/hi2";
 import { useAccount } from "wagmi";
 import { useWalletReady } from "@/lib/wallet-ready";
-import {
-  useExpertStore,
-  useMetaStore,
-  useNoxDepositStore,
-  useZamaDepositStore,
-} from "@/stores";
+import { useExpertStore, useMetaStore, useZamaDepositStore } from "@/stores";
 import { IdleAggregatorCard } from "../idle-aggregator-card";
 import {
   APY_PRESETS,
@@ -190,7 +185,7 @@ export function VaultList() {
     !selectedVault.isTransactional ||
     !hasValidAmount;
 
-function handleDepositClick() {
+  function handleDepositClick() {
     if (!selectedVault || !hasValidAmount) return;
     openZamaDepositSheet(
       {
@@ -203,7 +198,11 @@ function handleDepositClick() {
         apy: 5.7,
         isConfidential: true,
       },
-      { address: "0x3c13BDd505DE69bB0DF0a2e68A0Cd93a44beB0b4", symbol: "fUSDC", decimals: 6 },
+      {
+        address: "0x3c13BDd505DE69bB0DF0a2e68A0Cd93a44beB0b4",
+        symbol: "fUSDC",
+        decimals: 6,
+      },
       amount,
     );
   }
