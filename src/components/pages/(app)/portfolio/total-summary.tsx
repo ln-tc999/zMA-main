@@ -37,14 +37,14 @@ export function TotalSummary({
           <span className="flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-brand-soft">
             <Image
               src="/Assets/Images/Logo-Brand/logo-transparent.png"
-              alt="iEx AI"
+              alt="zMAAI"
               width={24}
               height={24}
               className="h-6 w-6 object-contain"
             />
           </span>
           <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-faint">
-            Net worth on iEx AI
+            Net worth on zMAAI
           </span>
         </div>
 
