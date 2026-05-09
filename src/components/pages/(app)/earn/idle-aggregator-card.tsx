@@ -21,7 +21,8 @@ export function IdleAggregatorCard() {
         </h2>
         <p className="max-w-md text-sm text-muted">
           Enter an amount to discover top vault routes on{" "}
-          <span className="font-semibold text-main">Arbitrum</span> — streamed in real time from{" "}
+          <span className="font-semibold text-main">Arbitrum</span> — streamed
+          in real time from{" "}
           <span className="font-semibold text-main">Nox Protocol</span>.
         </p>
       </div>
@@ -43,7 +44,8 @@ export function IdleAggregatorCard() {
           Enter an amount to continue
         </div>
         <div className="text-[11px] font-medium tracking-wide text-faint">
-          Powered by <span className="font-semibold text-muted">Nox Protocol</span>
+          Powered by{" "}
+          <span className="font-semibold text-muted">Nox Protocol</span>
         </div>
       </div>
     </section>
