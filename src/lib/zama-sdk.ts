@@ -1,6 +1,3 @@
-import { createInstance, FhevmInstance } from "fhevm";
-import type { Config } from "wagmi";
-
 export interface ZamaConfig {
   gatewayUrl: string;
   networkChainId: number;
@@ -12,45 +9,9 @@ const ZAMA_GATEWAY = {
 } as const;
 
 export function getZamaGateway(chainId: number): string {
-  return ZAMA_GATEWAY[chainId as keyof typeof ZAMA_GATEWAY] || ZAMA_GATEWAY[11155111];
-}
-
-let fhevmInstance: FhevmInstance | null = null;
-
-export async function getFhevmInstance(
-  publicKey: string,
-  gatewayUrl?: string,
-): Promise<FhevmInstance> {
-  if (fhevmInstance) return fhevmInstance;
-
-  const instance = createInstance({
-    gatewayUrl: gatewayUrl || getZamaGateway(11155111),
-  });
-
-  await instance.initialize();
-  fhevmInstance = instance;
-  return instance;
-}
-
-export function decryptUint256(instance: FhevmInstance, encrypted: string): bigint {
-  try {
-    const decrypted = instance.decrypt("uint256", encrypted);
-    return BigInt(decrypted);
-  } catch {
-    return 0n;
-  }
-}
-
-export function encryptAmount(
-  instance: FhevmInstance,
-  amount: bigint,
-  type: "uint256" | "uint128" | "uint64" = "uint256",
-): string {
-  try {
-    return instance.encrypt(type, amount.toString());
-  } catch {
-    return "0";
-  }
+  return (
+    ZAMA_GATEWAY[chainId as keyof typeof ZAMA_GATEWAY] || ZAMA_GATEWAY[11155111]
+  );
 }
 
 export interface ZamaVault {
