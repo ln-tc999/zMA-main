@@ -6,7 +6,7 @@ import {
 import { parseUnits } from "viem";
 import type { Config } from "wagmi";
 import { create } from "zustand";
-import { ERC20_ABI, FHE_ABI, type ZamaVault } from "@/lib/zama-sdk";
+import { ERC20_ABI, type ZamaVault } from "@/lib/zama-sdk";
 
 export type DepositStep =
   | "idle"
@@ -106,7 +106,18 @@ export const useZamaDepositStore = create<DepositState>((set, get) => ({
 
       const depositHash = await writeContract(config, {
         address: vault.address as `0x${string}`,
-        abi: FHE_ABI,
+        abi: [
+          {
+            name: "deposit",
+            type: "function",
+            inputs: [
+              { name: "assets", type: "uint256" },
+              { name: "receiver", type: "address" },
+            ],
+            outputs: [{ name: "", type: "uint256" }],
+            stateMutability: "nonpayable",
+          },
+        ],
         functionName: "deposit",
         args: [amountBigInt, account],
       });
