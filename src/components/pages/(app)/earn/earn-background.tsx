@@ -7,7 +7,7 @@ export function EarnBackground() {
       className="pointer-events-none fixed inset-0 -z-20 overflow-hidden"
     >
       <Image
-        src="/Assets/Images/Background/bg-expert-1.webp"
+        src="/Assets/Images/Background/bg-expert-2.webp"
         alt=""
         fill
         priority
