@@ -10,7 +10,7 @@ export default function NotFound() {
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-8 px-4 text-center">
       <Image
-        src="/Assets/Images/Logo-Brand/logo-transparent.png"
+        src="/Assets/Images/Logo-Brand/logo.png"
         alt="zMAAI"
         width={160}
         height={160}
