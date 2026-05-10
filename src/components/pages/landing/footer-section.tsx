@@ -72,7 +72,7 @@ export function FooterSection() {
             {/* Brand */}
             <div className="flex items-center gap-3">
               <Image
-                src="/Assets/Images/Logo-Brand/logo-transparent.png"
+                src="/Assets/Images/Logo-Brand/logo.png"
                 alt="zMAAI"
                 width={48}
                 height={48}
@@ -137,7 +137,7 @@ export function FooterSection() {
       {/* Giant watermark */}
       <div className="pointer-events-none mt-10 flex select-none items-center justify-center gap-4 overflow-hidden">
         <Image
-          src="/Assets/Images/Logo-Brand/logo-transparent.png"
+          src="/Assets/Images/Logo-Brand/logo.png"
           alt="zMAAI"
           width={200}
           height={200}
