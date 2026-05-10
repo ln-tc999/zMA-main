@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useEffect, useMemo } from "react";
 import { FiCheck, FiExternalLink, FiPlus, FiTrash2, FiX } from "react-icons/fi";
 
-const IEX_AI_LOGO = "/Assets/Images/Logo-Brand/logo-transparent.png";
+const IEX_AI_LOGO = "/Assets/Images/Logo-Brand/logo.png";
 import {
   formatApy,
   formatTimelock,
@@ -172,15 +172,15 @@ function buildSupplyContext(
 
   const token: Token = meta
     ? {
-        symbol: meta.symbol,
-        name: meta.name ?? meta.symbol,
-        usdPrice: Number.parseFloat(meta.priceUSD ?? "0") || 0,
-      }
+      symbol: meta.symbol,
+      name: meta.name ?? meta.symbol,
+      usdPrice: Number.parseFloat(meta.priceUSD ?? "0") || 0,
+    }
     : {
-        symbol: vault.tokenSymbol,
-        name: vault.tokenSymbol,
-        usdPrice: 0,
-      };
+      symbol: vault.tokenSymbol,
+      name: vault.tokenSymbol,
+      usdPrice: 0,
+    };
 
   return { token, chain };
 }
