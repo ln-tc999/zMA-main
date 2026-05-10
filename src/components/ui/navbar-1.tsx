@@ -34,7 +34,7 @@ const Navbar1 = () => {
               transition={{ duration: 0.3 }}
             >
               <Image
-                src="/Assets/Images/Logo-Brand/logo-transparent.png"
+                src="/Assets/Images/Logo-Brand/logo.png"
                 alt="zMAAI"
                 fill
                 priority
