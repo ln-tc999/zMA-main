@@ -123,7 +123,7 @@ export function ShareCard({
                 <div className="relative flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <img
-                      src="/Assets/Images/Logo-Brand/logo-transparent.png"
+                      src="/Assets/Images/Logo-Brand/logo.png"
                       alt="zMAAI"
                       width={28}
                       height={28}
@@ -357,7 +357,7 @@ export function ShareCard({
                       Earn with zMAAI
                     </span>
                     <img
-                      src="/Assets/Images/Logo-Brand/logo-transparent.png"
+                      src="/Assets/Images/Logo-Brand/logo.png"
                       alt="zMAAI"
                       width={14}
                       height={14}
