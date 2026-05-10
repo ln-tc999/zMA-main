@@ -8,7 +8,7 @@ export function IdleAggregatorCard() {
       <div className="flex flex-col gap-2">
         <span className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-faint">
           <Image
-            src="/Assets/Images/Logo-Brand/logo-transparent.png"
+            src="/Assets/Images/Logo-Brand/logo.png"
             alt="zMAAI"
             width={18}
             height={18}
