@@ -28,7 +28,7 @@ export function PortfolioHeader({
       await navigator.clipboard.writeText(address);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1600);
-    } catch {}
+    } catch { }
   }
 
   return (
@@ -36,7 +36,7 @@ export function PortfolioHeader({
       <div className="flex items-center gap-3">
         <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl bg-brand-soft">
           <Image
-            src="/Assets/Images/Logo-Brand/logo-transparent.png"
+            src="/Assets/Images/Logo-Brand/logo.png"
             alt="zMAAI"
             width={40}
             height={40}
