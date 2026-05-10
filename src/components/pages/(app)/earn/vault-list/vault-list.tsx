@@ -217,7 +217,7 @@ export function VaultList() {
         <div className="flex items-center gap-3">
           <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-brand-soft">
             <Image
-              src="/Assets/Images/Logo-Brand/logo-transparent.png"
+              src="/Assets/Images/Logo-Brand/logo.png"
               alt="zMAAI"
               width={32}
               height={32}
@@ -321,7 +321,7 @@ export function VaultList() {
                 const protocolMeta =
                   protocolsByName[vault.protocolKey] ??
                   protocolsByName[
-                    vault.protocol.toLowerCase().replace(/\s+/g, "-")
+                  vault.protocol.toLowerCase().replace(/\s+/g, "-")
                   ];
                 const protocolLogoUri =
                   vault.protocolLogoUri ??
